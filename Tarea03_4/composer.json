@@ -1,0 +1,14 @@
+{
+    "name": "jose/tarea03_4",
+    "authors": [
+        {
+            "name": "Jose A Bautista"
+        }
+    ],
+    "require": {
+        "mpdf/mpdf": "^8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    }
+}

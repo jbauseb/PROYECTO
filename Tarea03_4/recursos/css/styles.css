@@ -1,0 +1,154 @@
+/**Variable colores*/
+:root {
+    --texto: #323a5f;
+    --fondo: #d5e9fe;
+}
+
+/**Ajustes fuente*/
+body {
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/**HEADER**/
+.header {
+    border-bottom: 5px solid var(--texto);
+}
+
+.imagen {
+    margin: 10px 0 10px 100px;
+}
+
+.fecha,
+.nombre {
+    margin-right: 100px;
+}
+
+.nombre {
+    font-style: italic;
+}
+
+
+/**LOGIN*/
+h1 {
+    font-size: 1.2rem;
+    font-size: 1.6rem;
+    font-weight: 200;
+}
+
+.login input {
+    background-color: var(--fondo);
+    font-weight: 200;
+    font-size: 1.2rem;
+}
+
+/**BARRA DE NAVEGACIÓN**/
+/* navbar en una sola fila */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    border-bottom: #adb8e6 solid 3px;
+}
+
+/* Estilo para los dropdowns */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 0;
+}
+
+.dropdown-menu li {
+    list-style: none;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: var(--texto);
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--texto);
+    color: var(--fondo);
+}
+
+/* Estilo del menú desplegable con animación suave */
+.dropdown-menu {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+/* Mostrar submenús al hacer hover */
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#logout:hover {
+    background-color: var(--texto);
+    color: var(--fondo);
+}
+
+/*Espacio principal*/
+.container {
+    min-height: 65vh;
+}
+
+/*Menú rutas*/
+.menu-links {
+    display: flex;
+    justify-content: center;
+    gap: 15rem;
+    margin: 2rem 0;
+}
+
+.menu-links a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--texto);
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.menu-links a:hover {
+    background: var(--texto);
+    color: var(--fondo);
+}
+
+/* Ajustes para el formulario */
+form {
+    background-color: var(--fondo);
+}
+
+
+.report div a {
+    background-color: var(--fondo);
+}
+
+
+/*Para errores de validación*/
+.error-message {
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+input {
+    transition: border-color 0.3s ease-in-out;
+}
+
+/** Footer */
+.footer {
+    margin-top: 1rem;
+    color: var(--texto);
+    text-align: center;
+    border-top: 1px var(--texto) solid;
+}
