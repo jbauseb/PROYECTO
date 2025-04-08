@@ -1,0 +1,17 @@
+# Composer dependencies
+/vendor/
+
+# Archivos temporales / del sistema
+.DS_Store
+Thumbs.db
+
+# Configs de IDEs
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Node.js (si usaras JS moderno)
+node_modules/
+

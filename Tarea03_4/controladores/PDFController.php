@@ -381,7 +381,7 @@ class PDFController
             }
 
             $html = "<h2 style='text-align: center;'>Informe de solicitudes</h2>
-        <h4>Número total de solicitudes: {$totalSolicitudes}</h4>
+        <h3>Número total de solicitudes: {$totalSolicitudes}</h3>
         <h3 style='text-align: start;'>Solicitudes por usuario</h3>";
 
             $filas = [];
@@ -416,16 +416,17 @@ class PDFController
             $totalDias = 0;
 
             foreach ($requests as $request) {
-                $fechaInicio = new DateTime($request['fecha_inicio']);
-                $fechaFin = new DateTime($request['fecha_fin']);
-                $diferencia = $fechaInicio->diff($fechaFin)->days; //Calcula la diferencia en días
-                $totalDias += $diferencia;
+                if ($request['fecha_fin']) {
+                    $fechaInicio = new DateTime($request['fecha_inicio']);
+                    $fechaFin = new DateTime($request['fecha_fin']);
+                    $diferencia = $fechaInicio->diff($fechaFin)->days; //Calcula la diferencia en días
+                    $totalDias += $diferencia;
+                }
             }
-
             //Calcula la media evitando la división por cero
             $mediaDias = $totalSolicitudes > 0 ? $totalDias / $totalSolicitudes : 0;
 
-            $html .= "<h3 style='text-align: start;'>Promedio de días en finalizar las solicitudes: <strong>" . round($mediaDias, 2) . " días.</strong></h3>";
+            $html .= "<h3 style='text-align: start;'>Promedio de días en finalizar las {$totalSolicitudes} solicitudes: <strong>" . round($mediaDias, 2) . " días por solicitud.</strong></h3>";
         } else {
             $html = "<h3>No existen solicitudes para mostrar.</h3>";
         }
