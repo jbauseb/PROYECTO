@@ -41,14 +41,13 @@ extension=fileinfo
 extension=intl
 
 Instalación y uso
-1. Clonar el repositorio:
-   git clone https://github.com/jbauseb/PROYECTO.git
-2. Mover el proyecto a la carpeta htdocs de XAMPP.
-3. Instalar dependencias:
-   Dentro de la carpeta PROYECTO/Tarea03_4 ejecutar para instalar mPdf:
-   composer install
-4. La configuración del fichero PROYECTO/Tarea03_4/config.php está por defecto para despliegue local, pero dispone de las líneas de código para despliegue en InfinityFree.
-5. Si fuera necesario, darle todos los permisos a todos los ficheros incluidos dentro de PROYECTO/Tarea03_4.
-6. Crear la base de datos e insertar datos de muestra mediante el fichero PROYECTO/Tarea03_4/basedatos/BaseDatos.sql en phpMyAdmin.
-7. Iniciar XAMPP e iniciar los servidores MySQL y Apache.
-8. Abrir la aplicación a través de un navegador web a la URL http://localhost/PROYECTO/Tarea03_4
+    1. Clonar el repositorio:
+       git clone https://github.com/jbauseb/PROYECTO.git
+    2. Mover el proyecto a la carpeta htdocs de XAMPP.
+    3. Si es necesario, dar permisos a todo el proyecto (carpetas, ficheros) de lectura, escritura y ejecución.
+    4. Instalar dependencias:
+       Dentro de la carpeta PROYECTO/Tarea03_4 ejecutar para instalar mPdf:
+       composer install
+    5. Crear la base de datos e insertar datos de muestra mediante el fichero PROYECTO/Tarea03_4/basedatos/BaseDatos.sql en phpMyAdmin.
+    6. Iniciar XAMPP e iniciar los servidores MySQL y Apache.
+    7. Abrir la aplicación a través de un navegador web a la URL http://localhost/PROYECTO/Tarea03_4

@@ -9,11 +9,15 @@ class MaterialModel
     private $db;
 
     /**
-     * Constructor de la clase
+     * Constructor de la clase. Incluye un condicional para conectar con la base de datos de prueba.
      */
-    public function __construct()
+    public function __construct($db = null)
     {
-        $this->db = conectar();
+        if ($db) {
+            $this->db = $db;//Conexión con testdb_alm_system
+        } else {
+            $this->db = conectar();
+        }
     }
 
     /**

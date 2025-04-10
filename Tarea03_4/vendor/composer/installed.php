@@ -3,7 +3,7 @@
         'name' => 'jose/tarea03_4',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '11c103fe6ad269f67606cc6d103e2ffe327c5098',
+        'reference' => '5786b5e3537f0380cc4ab45d0284065644ae01b7',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'jose/tarea03_4' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '11c103fe6ad269f67606cc6d103e2ffe327c5098',
+            'reference' => '5786b5e3537f0380cc4ab45d0284065644ae01b7',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

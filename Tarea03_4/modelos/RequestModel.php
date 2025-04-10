@@ -11,9 +11,13 @@ class RequestModel
     /**
      * Constructor de la clase
      */
-    public function __construct()
+    public function __construct($db = null)
     {
-        $this->db = conectar(); //Reutilizamos la conexión a la BD
+        if ($db) {
+            $this->db = $db; //Conexión con testdb_alm_system
+        } else {
+            $this->db = conectar();
+        }
     }
 
     /**
@@ -46,7 +50,6 @@ class RequestModel
     {
         try {
             $id_empleado = $_SESSION['user']['id'];
-
             //Fecha y hora se insertan automáticamente en la base de datos
 
             $sql = "INSERT INTO solicitud (id_empleado) VALUES (?)";
@@ -313,11 +316,11 @@ class RequestModel
             return $stmt = $this->db->query($sql);
         } catch (Exception $e) {
             error_log("Error: " . $e->getMessage()); // Guarda el error en el log del servidor
-            return false; 
+            return false;
         }
     }
 
-   /**
+    /**
      * Obtiene la solicitud que se resolvió en un menor número de días.
      * @return boolean Devuelve true en caso de éxito y false en caso contrario.
      */
