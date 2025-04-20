@@ -5,7 +5,7 @@
 echo
 echo "==================================================="
 echo "         Instalador de ALM System - Linux"
-echo "	       José Alfredo Bautista Sebastiao
+echo "	       José Alfredo Bautista Sebastiao"
 echo "==================================================="
 echo
 
