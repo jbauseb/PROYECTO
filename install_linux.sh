@@ -17,14 +17,14 @@ NC='\033[0m' # Sin color
 # Verificar si Git está instalado
 if ! command -v git &> /dev/null
 then
-    echo -e "${RED}ERROR:${NC} Git no está instalado. Instale Git antes de continuar."
+    echo -e "${RED}ERROR:${NC} Git no está instalado. Instale Git antes de continuar. sudo apt install git"
     exit 1
 fi
 
 # Verificar si Composer está instalado
 if ! command -v composer &> /dev/null
 then
-    echo -e "${RED}ERROR:${NC} Composer no está instalado. Instale Composer antes de continuar."
+    echo -e "${RED}ERROR:${NC} Composer no está instalado. Instale Composer antes de continuar. sudo apt install composer"
     exit 1
 fi
 
@@ -58,23 +58,7 @@ echo -e "${GREEN}Instalando dependencias Composer...${NC}"
 cd /opt/lampp/htdocs/PROYECTO/Tarea03_4
 composer install
 
-# Paso 5: Crear la base de datos e insertar datos de muestra
-echo -e "${GREEN}Creando base de datos...${NC}"
-
-# Comprobamos que el servidor MySQL esté corriendo
-if ! pgrep -x "mysqld" > /dev/null
-then
-    echo -e "${RED}ERROR:${NC} MySQL no parece estar corriendo. Inicie XAMPP o MySQL manualmente."
-    exit 1
-fi
-
-mysql -u root < /opt/lampp/htdocs/PROYECTO/Tarea03_4/basedatos/BaseDatos.sql
-
-# Paso 6: Iniciar XAMPP
-echo -e "${GREEN}Iniciando XAMPP...${NC}"
-sudo /opt/lampp/lampp start
-
-# Paso 7: Abrir la aplicación en el navegador
+# Paso 5: Abrir la aplicación en el navegador
 echo -e "${GREEN}Abriendo la aplicación en el navegador...${NC}"
 xdg-open "http://localhost/PROYECTO/Tarea03_4" &> /dev/null
 
