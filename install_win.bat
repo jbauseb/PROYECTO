@@ -4,7 +4,8 @@ color 0A
 
 echo.
 echo ================================================
-echo    Instalador de ALM System
+echo    Instalador de ALM System - Windows
+echo    José Alfredo Bautista Sebastiao
 echo ================================================
 echo.
 
