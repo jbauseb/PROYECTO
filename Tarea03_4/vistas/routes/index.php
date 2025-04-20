@@ -20,7 +20,7 @@ if ($rutas) {
         <!-- Enlaces para cambiar entre tablas -->
         <div class="menu-links">
             <a href="#" onclick="mostrarTabla('origen')" title="Rutas que aún no han salido del almacén de origen">Rutas pendientes de salir</a>
-            <a href="#" onclick="mostrarTabla('transito')" title="Rutas que están se encuentran en camino al destino">Rutas en tránsito</a>
+            <a href="#" onclick="mostrarTabla('transito')" title="Rutas que se encuentran en camino al destino">Rutas en tránsito</a>
             <a href="#" onclick="mostrarTabla('destino')" title="Rutas que ya han llegado a su destino y han entregado el material">Rutas finalizadas</a>
         </div>
 

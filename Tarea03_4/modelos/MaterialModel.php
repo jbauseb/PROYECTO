@@ -14,7 +14,7 @@ class MaterialModel
     public function __construct($db = null)
     {
         if ($db) {
-            $this->db = $db;//Conexión con testdb_alm_system
+            $this->db = $db; //Conexión con testdb_alm_system
         } else {
             $this->db = conectar();
         }
@@ -54,33 +54,38 @@ class MaterialModel
      */
     public function searchMaterial($filtros)
     {
-        $condiciones = []; //Vamos añadiendo los diferentes filtros
-        $parametros = []; //Vamos añadiendo los diferentes valores
+        try {
+            $condiciones = []; //Vamos añadiendo los diferentes filtros
+            $parametros = []; //Vamos añadiendo los diferentes valores
 
-        foreach ($filtros as $clave => $valor) {
-            $valor = trim($valor); //Eliminamos espacios en blanco
+            foreach ($filtros as $clave => $valor) {
+                $valor = trim($valor); //Eliminamos espacios en blanco
 
-            if ($valor !== "") { //Permite valores como "0"
-                if (in_array($clave, ['nombre', 'partnumber'])) {
-                    //Búsqueda flexible con LIKE para nombres y P/N
-                    $condiciones[] = "$clave LIKE :$clave";
-                    $parametros[":$clave"] = "%$valor%";
-                } else {
-                    //Búsqueda exacta para id_material y almacén
-                    $condiciones[] = "$clave = :$clave";
-                    $parametros[":$clave"] = $valor;
+                if ($valor !== "") { //Permite valores como "0"
+                    if (in_array($clave, ['nombre', 'partnumber'])) {
+                        //Búsqueda flexible con LIKE para nombres y P/N
+                        $condiciones[] = "$clave LIKE :$clave";
+                        $parametros[":$clave"] = "%$valor%";
+                    } else {
+                        //Búsqueda exacta para id_material y almacén
+                        $condiciones[] = "$clave = :$clave";
+                        $parametros[":$clave"] = $valor;
+                    }
                 }
             }
+            //Construimos la consulta de manera dinámica
+            $where = $condiciones ? "WHERE " . implode(" AND ", $condiciones) : ""; //Vamos uniendo los elementos con AND
+            $sql = "SELECT * FROM material $where";
+            $stmt = $this->db->prepare($sql);
+            foreach ($parametros as $key => $value) {
+                $stmt->bindValue($key, $value, PDO::PARAM_STR);
+            }
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return false;
         }
-        //Construimos la consulta de manera dinámica
-        $where = $condiciones ? "WHERE " . implode(" AND ", $condiciones) : ""; //Vamos uniendo los elementos con AND
-        $sql = "SELECT * FROM material $where";
-        $stmt = $this->db->prepare($sql);
-        foreach ($parametros as $key => $value) {
-            $stmt->bindValue($key, $value, PDO::PARAM_STR);
-        }
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -91,11 +96,16 @@ class MaterialModel
      */
     public function selectMaterial($id)
     {
-        $stmt = $this->db->prepare("SELECT * FROM material WHERE id_material=?");
-        $stmt->bindValue(1, $id, PDO::PARAM_INT);
-        $stmt->execute();
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM material WHERE id_material=?");
+            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -105,15 +115,19 @@ class MaterialModel
      */
     public function deleteMaterial($id)
     {
-        $stmt = $this->db->prepare("DELETE FROM material WHERE id_material = ?");
-        $stmt->bindValue(1, $id, PDO::PARAM_INT);
-        //Ejecuta la sentencia
-        $stmt->execute();
-        //Verificar si se eliminó alguna fila
-        if ($stmt->rowCount() > 0) {
-            return true; //Material eliminado con éxito
+        try {
+            $stmt = $this->db->prepare("DELETE FROM material WHERE id_material = ?");
+            $stmt->bindValue(1, $id, PDO::PARAM_INT);
+            //Ejecuta la sentencia
+            $stmt->execute();
+            //Verificar si se eliminó alguna fila
+            if ($stmt->rowCount() > 0) {
+                return true; //Material eliminado con éxito
+            }
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return false; //No se eliminó el material
         }
-        return false; //No se eliminó el material
     }
 
     /**
@@ -129,7 +143,8 @@ class MaterialModel
      */
     public function updateMaterial($id, $pn, $nombre, $descripcion, $almacen, $stock, $umbral_stock)
     {
-        $stmt = $this->db->prepare("UPDATE material SET
+        try {
+            $stmt = $this->db->prepare("UPDATE material SET
             partnumber = ?,
             nombre = ?,
             descripcion = ?,
@@ -138,19 +153,22 @@ class MaterialModel
             umbral_stock = ?
         WHERE id_material = ?");
 
-        $stmt->bindValue(1, $pn, PDO::PARAM_STR);
-        $stmt->bindValue(2, $nombre, PDO::PARAM_STR);
-        $stmt->bindValue(3, $descripcion, PDO::PARAM_STR);
-        $stmt->bindValue(4, $almacen, PDO::PARAM_STR);
-        $stmt->bindValue(5, $stock, PDO::PARAM_INT);
-        $stmt->bindValue(6, $umbral_stock, PDO::PARAM_INT);
-        $stmt->bindValue(7, $id, PDO::PARAM_INT);
+            $stmt->bindValue(1, $pn, PDO::PARAM_STR);
+            $stmt->bindValue(2, $nombre, PDO::PARAM_STR);
+            $stmt->bindValue(3, $descripcion, PDO::PARAM_STR);
+            $stmt->bindValue(4, $almacen, PDO::PARAM_STR);
+            $stmt->bindValue(5, $stock, PDO::PARAM_INT);
+            $stmt->bindValue(6, $umbral_stock, PDO::PARAM_INT);
+            $stmt->bindValue(7, $id, PDO::PARAM_INT);
 
-        //Ejecutar la consulta
-        if ($stmt->execute()) {
-            return true; //Actualización exitosa
+            //Ejecutar la consulta
+            if ($stmt->execute()) {
+                return true; //Actualización exitosa
+            }
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return false; //Error al actualizar
         }
-        return false; //Error al actualizar
     }
 
     /**
@@ -160,18 +178,22 @@ class MaterialModel
      */
     public function getStock($id_material)
     {
-        $sql = "SELECT stock FROM material WHERE id_material= ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $id_material, PDO::PARAM_INT);
+        try {
+            $sql = "SELECT stock FROM material WHERE id_material= ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $id_material, PDO::PARAM_INT);
 
-        if ($stmt->execute()) {
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($resultado && isset($resultado['stock'])) {
-                return intval($resultado['stock']); //Devuelve el stock como entero
+            if ($stmt->execute()) {
+                $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($resultado && isset($resultado['stock'])) {
+                    return intval($resultado['stock']); //Devuelve el stock como entero
+                }
             }
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            //En caso de error o si no se encuentra el material, devuelve null
+            return null;
         }
-        //En caso de error o si no se encuentra el material, devuelve null
-        return null;
     }
 
     /**
@@ -183,12 +205,17 @@ class MaterialModel
      */
     public function setStock($id_material, $nuevo_stock)
     {
-        $sql = "UPDATE material SET stock = ? WHERE id_material = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $nuevo_stock, PDO::PARAM_INT);
-        $stmt->bindParam(2, $id_material, PDO::PARAM_INT);
+        try {
+            $sql = "UPDATE material SET stock = ? WHERE id_material = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $nuevo_stock, PDO::PARAM_INT);
+            $stmt->bindParam(2, $id_material, PDO::PARAM_INT);
 
-        return $stmt->execute();
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -200,13 +227,18 @@ class MaterialModel
      */
     public function getMaterialByPartnumberAndAlmacen($pn, $almacen)
     {
-        $sql = "SELECT * FROM material WHERE partnumber = ? AND almacen = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $pn, PDO::PARAM_STR);
-        $stmt->bindParam(2, $almacen, PDO::PARAM_STR);
-        $stmt->execute();
+        try {
+            $sql = "SELECT * FROM material WHERE partnumber = ? AND almacen = ?";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $pn, PDO::PARAM_STR);
+            $stmt->bindParam(2, $almacen, PDO::PARAM_STR);
+            $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -221,16 +253,23 @@ class MaterialModel
      */
     public function insertMaterial($pn, $nombre, $descripcion, $almacen, $stock, $umbral_stock)
     {
-        $sql = "INSERT INTO material (partnumber, nombre, descripcion, almacen, stock, umbral_stock) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $pn, PDO::PARAM_STR);
-        $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
-        $stmt->bindParam(3, $descripcion, PDO::PARAM_STR);
-        $stmt->bindParam(4, $almacen, PDO::PARAM_STR);
-        $stmt->bindParam(5, $stock, PDO::PARAM_INT);
-        $stmt->bindParam(6, $umbral_stock, PDO::PARAM_INT);
+        try {
+            $sql = "INSERT INTO material (partnumber, nombre, descripcion, almacen, stock, umbral_stock) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $pn, PDO::PARAM_STR);
+            $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
+            $stmt->bindParam(3, $descripcion, PDO::PARAM_STR);
+            $stmt->bindParam(4, $almacen, PDO::PARAM_STR);
+            $stmt->bindParam(5, $stock, PDO::PARAM_INT);
+            $stmt->bindParam(6, $umbral_stock, PDO::PARAM_INT);
 
-        return $stmt->execute();
+            $stmt->execute();
+            $this->lastInsertedId = $this->db->lastInsertId(); // Guardamos el ID
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -241,7 +280,8 @@ class MaterialModel
      */
     public function getMaterialsByRoute($id_ruta)
     {
-        $sql = "SELECT
+        try {
+            $sql = "SELECT
                 m.id_material,
                 m.partnumber AS partnumber,
                 m.nombre AS material_nombre,
@@ -253,10 +293,14 @@ class MaterialModel
                 ON m.id_material = sm.id_material
                 WHERE sm.id_ruta = ?";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(1, $id_ruta, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(1, $id_ruta, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return [];
+        }
     }
 
     /**
@@ -284,9 +328,14 @@ class MaterialModel
      */
     public function materialMasStock()
     {
-        $sql = "SELECT * FROM material WHERE stock = (SELECT MAX(stock) FROM material)";
-        $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $sql = "SELECT * FROM material WHERE stock = (SELECT MAX(stock) FROM material)";
+            $stmt = $this->db->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return [];
+        }
     }
 
     /**
@@ -297,9 +346,14 @@ class MaterialModel
 
     public function materialMenosStock()
     {
-        $sql = "SELECT * FROM material WHERE stock = (SELECT MIN(stock) FROM material)";
-        $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $sql = "SELECT * FROM material WHERE stock = (SELECT MIN(stock) FROM material)";
+            $stmt = $this->db->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return [];
+        }
     }
 
     /**
@@ -309,14 +363,18 @@ class MaterialModel
      */
     public function materialMasSolicitado()
     {
-
-        $sql = "SELECT m.*, SUM(sm.cantidad_solicitada) AS total_cantidad_solicitada
+        try {
+            $sql = "SELECT m.*, SUM(sm.cantidad_solicitada) AS total_cantidad_solicitada
                 FROM material m
                 JOIN solicitud_material sm ON m.id_material = sm.id_material
                 GROUP BY m.id_material
                 ORDER BY cantidad_solicitada DESC";
 
-        $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->db->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return [];
+        }
     }
 }

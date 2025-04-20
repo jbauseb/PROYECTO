@@ -10,9 +10,13 @@ class UserModel
     /**
      * Constructor de la clase
      */
-    public function __construct()
+    public function __construct($db = null)
     {
-        $this->db = conectar();
+        if ($db) {
+            $this->db = $db; //Conexión con testdb_alm_system
+        } else {
+            $this->db = conectar();
+        }
     }
 
     /**

@@ -46,10 +46,9 @@ class RequestModel
      * Crea una nueva solicitud, usando el id del usuario que inició sesión
      * @return int|boolean Devuelve un entero que representa el identificador de la solicitud. En caso de error, devuelve false.
      */
-    public function createRequest()
+    public function createRequest($id_empleado)
     {
         try {
-            $id_empleado = $_SESSION['user']['id'];
             //Fecha y hora se insertan automáticamente en la base de datos
 
             $sql = "INSERT INTO solicitud (id_empleado) VALUES (?)";

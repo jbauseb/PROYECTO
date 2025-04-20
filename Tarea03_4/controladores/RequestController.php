@@ -1,6 +1,6 @@
 <?php
 //Se incluyen los archivos de configuración y la gestión de sesiones
-require_once $_SERVER['DOCUMENT_ROOT'] . "/PROYECTO/Tarea03_4/config.php";
+require_once __DIR__ . "/../config.php";
 require_once BASE_PATH . "sesion.php";  //INCLUYE SESIÓN
 require_once BASE_PATH . 'modelos/RequestModel.php';
 require_once BASE_PATH . 'modelos/MaterialModel.php';
@@ -220,7 +220,7 @@ class RequestController
             }
 
             //Se crea la solicitud solo si hay material disponible
-            $id_solicitud = $this->requestModel->createRequest();
+            $id_solicitud = $this->requestModel->createRequest($_SESSION['user']['id']);
 
             //Ahora otra vez a procesar los materiales para agregarlos a la solicitud
             foreach ($pn_materiales as $index => $pn_material) {

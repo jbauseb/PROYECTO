@@ -1,6 +1,6 @@
 <?php
 //Se incluyen los archivos de configuración y la gestión de sesiones
-require_once $_SERVER['DOCUMENT_ROOT'] . "/PROYECTO/Tarea03_4/config.php";
+require_once __DIR__ . "/../config.php";
 require_once BASE_PATH . "sesion.php";
 require_once BASE_PATH . 'vendor/autoload.php'; //iNSTALACIÓN DE mpdf
 require_once BASE_PATH . "modelos/MaterialModel.php";
