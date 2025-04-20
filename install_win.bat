@@ -5,7 +5,7 @@ color 0A
 echo.
 echo ================================================
 echo    Instalador de ALM System - Windows
-echo    José Alfredo Bautista Sebastiao
+echo    Jose Alfredo Bautista Sebastiao
 echo ================================================
 echo.
 
@@ -25,28 +25,28 @@ if errorlevel 1 (
     exit /b
 )
 
-REM Paso 1: Clonar el repositorio
+REM Paso 1: Clona el repositorio
 echo Clonando el repositorio...
 git clone https://github.com/jbauseb/PROYECTO.git
 
-REM Paso 2: Mover el proyecto a la carpeta htdocs de XAMPP
+REM Paso 2: Mueve el proyecto a la carpeta htdocs de XAMPP
 echo Copiando archivos a htdocs...
-move /Y PROYECTO "C:\xampp\htdocs\PROYECTO"
+move /Y PROYECTO "C:\xampp\htdocs"
 
-REM Paso 3: Instalar dependencias con Composer
+REM Paso 3: Instala dependencias con Composer
 echo Instalando dependencias con Composer...
 cd /d C:\xampp\htdocs\PROYECTO\Tarea03_4
 composer install
 
-REM Paso 4: Crear la base de datos e insertar datos de muestra
-echo Creando base de datos...
-mysql -u root < C:\xampp\htdocs\PROYECTO\Tarea03_4\basedatos\BaseDatos.sql
-
-REM Paso 5: Iniciar XAMPP
+REM Paso 4: Inicia XAMPP
 echo Iniciando XAMPP...
-start "" "C:\xampp\xampp-control.exe"
+start "" "C:\xampp\xampp_start.exe"
 
-REM Paso 6: Abrir la aplicación en el navegador
+REM Paso 5: Crea la base de datos e inserta datos de muestra
+echo Creando base de datos...
+"C:\xampp\mysql\bin\mysql.exe" -u root < "C:\xampp\htdocs\PROYECTO\Tarea03_4\basedatos\BaseDatos.sql"
+
+REM Paso 6: Abre la aplicación en el navegador
 echo Abriendo la aplicacion en el navegador...
 start http://localhost/PROYECTO/Tarea03_4
 
