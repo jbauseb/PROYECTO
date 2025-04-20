@@ -39,17 +39,17 @@ class MaterialModelTest extends TestCase
     //Test para buscar un material que no existe
     public function testSearchMaterialNoEncontrado()
     {
-        $filtros = ['id_material' => '-1']; // ID inexistente
+        $filtros = ['id_material' => '-1']; //ID inexistente
         $material = $this->materialModel->searchMaterial($filtros);
-        $this->assertEmpty($material); // Verifica que el resultado está vacío
+        $this->assertEmpty($material); //Verifica que el resultado está vacío
     }
 
     //Test para seleccionar un material existente por ID
     public function testSelectMaterialExistente()
     {
-        $id = '1'; // ID de un material que debe existir
-        $material = $this->materialModel->selectMaterial($id);
-        $this->assertNotEmpty($material); // Verifica que se obtuvo un resultado
+        $id_material = '1'; //ID de un material que debe existir
+        $material = $this->materialModel->selectMaterial($id_material);
+        $this->assertNotEmpty($material); //Verifica que se obtuvo un resultado
     }
 
     //Test para insertar un nuevo material

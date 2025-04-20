@@ -4,8 +4,8 @@
 
 echo
 echo "==================================================="
-echo "         Instalador de ALM System - Linux"
-echo "	       José Alfredo Bautista Sebastiao"
+echo "      Instalador de ALM System en Sistemas Linux"
+echo "	    Jose Alfredo Bautista Sebastiao"
 echo "==================================================="
 echo
 
@@ -47,7 +47,7 @@ if [ -d "/opt/lampp/htdocs/PROYECTO" ]; then
 fi
 
 # Mover
-sudo mv PROYECTO /opt/lampp/htdocs/PROYECTO
+sudo mv PROYECTO /opt/lampp/htdocs
 
 # Paso 3: Dar permisos
 echo -e "${GREEN}Asignando permisos...${NC}"
@@ -58,7 +58,20 @@ echo -e "${GREEN}Instalando dependencias Composer...${NC}"
 cd /opt/lampp/htdocs/PROYECTO/Tarea03_4
 composer install
 
-# Paso 5: Abrir la aplicación en el navegador
+# Paso 5: Iniciar Apache y MySQL de XAMPP
+echo -e "${GREEN}Iniciando Apache y MySQL de XAMPP...${NC}"
+sudo /opt/lampp/lampp start
+
+# Paso 6: Crear la base de datos e insertar datos de muestra
+echo -e "${GREEN}Creando la base de datos...${NC}"
+sudo /opt/lampp/bin/mysql -u root < /opt/lampp/htdocs/PROYECTO/Tarea03_4/basedatos/BaseDatos.sql
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}Base de datos creada correctamente.${NC}"
+else
+    echo -e "${RED}ERROR:${NC} No se pudo crear la base de datos."
+fi
+
+# Paso 7: Abrir la aplicación en el navegador
 echo -e "${GREEN}Abriendo la aplicación en el navegador...${NC}"
 xdg-open "http://localhost/PROYECTO/Tarea03_4" &> /dev/null
 

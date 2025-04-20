@@ -4,7 +4,7 @@ color 0A
 
 echo.
 echo ================================================
-echo    Instalador de ALM System - Windows
+echo    Instalador de ALM System en Sistemas Windows
 echo    Jose Alfredo Bautista Sebastiao
 echo ================================================
 echo.
@@ -38,9 +38,20 @@ echo Instalando dependencias con Composer...
 cd /d C:\xampp\htdocs\PROYECTO\Tarea03_4
 composer install
 
-REM Paso 4: Inicia XAMPP
-echo Iniciando XAMPP...
-start "" "C:\xampp\xampp_start.exe"
+
+REM Iniciar Apache
+echo Iniciando Apache...
+start "" "C:\xampp\apache_start.bat"
+
+REM Esperar 2 segundos
+timeout /t 2 >nul
+
+REM Iniciar MySQL
+echo Iniciando MySQL...
+start "" "C:\xampp\mysql_start.bat"
+
+REM Esperar otros 2 segundos para asegurarse
+timeout /t 2 >nul
 
 REM Paso 5: Crea la base de datos e inserta datos de muestra
 echo Creando base de datos...
