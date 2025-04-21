@@ -51,7 +51,7 @@ sudo mv PROYECTO /opt/lampp/htdocs
 
 # Paso 3: Dar permisos
 echo -e "${GREEN}Asignando permisos...${NC}"
-sudo chmod -R 755 /opt/lampp/htdocs/PROYECTO
+sudo chmod -R 777 /opt/lampp/htdocs/PROYECTO
 
 # Paso 4: Instalar dependencias con Composer
 echo -e "${GREEN}Instalando dependencias Composer...${NC}"
