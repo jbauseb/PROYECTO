@@ -17,14 +17,6 @@ if errorlevel 1 (
     exit /b
 )
 
-REM Verificar si Composer está instalado
-REM where composer >nul 2>nul
-REM if errorlevel 1 (
-REM    echo ERROR: Composer no esta instalado. Instale Composer antes de continuar.
-REM    pause
-REM    exit /b
-REM )
-
 REM Clona el repositorio
 echo Clonando el repositorio...
 git clone https://github.com/jbauseb/PROYECTO.git
