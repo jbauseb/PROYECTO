@@ -20,7 +20,6 @@ class RouteModelTest extends TestCase
     public function testGetAllRoutes()
     {
         $routes = $this->routeModel->getAllRoutes(); //Llamamos al método del modelo
-        //$this->assertIsArray($routes);
         $this->assertEmpty($routes);
     }
 

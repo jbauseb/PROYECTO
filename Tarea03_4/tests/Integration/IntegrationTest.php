@@ -55,7 +55,7 @@ class IntegrationTest extends TestCase
 
         //Crear solicitud
         $solicitudId = $this->requestModel->createRequest($empleadoId);
-        //Agregar material a solicitud
+        //Agregar material a solicitud (id solicitud, id material, cantidad, id ruta)
         $this->requestModel->addMaterialToRequest($solicitudId, $materialId, 10, 1);
 
         //Verificaciones
@@ -179,7 +179,7 @@ class IntegrationTest extends TestCase
         //Agregamos el material
         $this->requestModel->addMaterialToRequest($solicitudId, $materialId, 5, $rutaId);
 
-        // Simular entrega => reducir stock manualmente
+        //Simulamos entrega del material => reducir stock manualmente
         $this->materialModel->setStock($materialId, 10);
 
         //Comprobamos que el nuevo stock coincide con 10

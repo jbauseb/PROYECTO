@@ -28,11 +28,11 @@ then
 fi
 
 # Verificar si Composer está instalado
-if ! command -v composer &> /dev/null
-then
-    echo -e "${RED}ERROR:${NC} Composer no está instalado. Instale Composer antes de continuar --> sudo apt install composer"
-    exit 1
-fi
+#if ! command -v composer &> /dev/null
+#then
+#    echo -e "${RED}ERROR:${NC} Composer no está instalado. Instale Composer antes de continuar --> sudo apt install composer"
+#    exit 1
+#fi
 
 # Paso 1: Clonar el repositorio
 echo -e "${GREEN}Clonando el repositorio...${NC}"
