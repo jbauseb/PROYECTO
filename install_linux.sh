@@ -14,6 +14,12 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # Sin color
 
+# Verificar si XAMPP está instalado
+if [ ! -d "/opt/lampp" ]; then
+    echo -e "${RED}ERROR:${NC} XAMPP no está instalado en /opt/lampp."
+    exit 1
+fi
+
 # Verificar si Git está instalado
 if ! command -v git &> /dev/null
 then
@@ -25,12 +31,6 @@ fi
 if ! command -v composer &> /dev/null
 then
     echo -e "${RED}ERROR:${NC} Composer no está instalado. Instale Composer antes de continuar. sudo apt install composer"
-    exit 1
-fi
-
-# Verificar si XAMPP está instalado
-if [ ! -d "/opt/lampp" ]; then
-    echo -e "${RED}ERROR:${NC} XAMPP no está instalado en /opt/lampp."
     exit 1
 fi
 
@@ -62,14 +62,16 @@ composer install
 echo -e "${GREEN}Iniciando Apache y MySQL de XAMPP...${NC}"
 sudo /opt/lampp/lampp start
 
+# Espera hasta que arranque MySQL
+echo -e "${GREEN}Esperando que MySQL esté disponible...${NC}"
+while ! sudo /opt/lampp/bin/mysqladmin ping -u root --silent; do
+    sleep 1
+done
+
 # Paso 6: Crear la base de datos e insertar datos de muestra
 echo -e "${GREEN}Creando la base de datos...${NC}"
 sudo /opt/lampp/bin/mysql -u root < /opt/lampp/htdocs/PROYECTO/Tarea03_4/basedatos/BaseDatos.sql
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}Base de datos creada correctamente.${NC}"
-else
-    echo -e "${RED}ERROR:${NC} No se pudo crear la base de datos."
-fi
+
 
 # Paso 7: Abrir la aplicación en el navegador
 echo -e "${GREEN}Abriendo la aplicación en el navegador...${NC}"
