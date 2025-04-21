@@ -1,5 +1,5 @@
 ALM System - Sistema de Gestión de Logística Aeronaútica
-Este proyecto es un sistema web desarrollado para la gestión eficiente de solicitudes de materiales y rutas de transporte optimizadas. Utiliza arquitectura MVC, incluye pruebas unitarias y está preparado tanto para despliegue local como en servidores como InfinityFree.
+Este proyecto es un sistema web desarrollado para la gestión de solicitudes de materiales y rutas de transporte. Utiliza arquitectura MVC, incluye pruebas unitarias y está preparado tanto para despliegue local como en servidores como InfinityFree.
 
 Tecnologías utilizadas
 HTML5, CSS3, PHP, JavaScript
@@ -16,7 +16,6 @@ Gestión de solicitudes de materiales
 Cálculo de rutas óptimas con la API REST de OSRM
 Eliminación automática de solicitudes vacías (mediante trigger en la BD)
 Generación de documentos PDF con mPDF
-Interfaz adaptada a dispositivos
 Compatible con hosting gratuito (InfinityFree)
 Problemas solucionados
 file_get_contents no funciona en InfinityFree → se reemplazó por cURL
@@ -25,7 +24,7 @@ Se implementó un trigger SQL para borrar solicitudes sin materiales
 Funcionalidades pendientes y mejoras futuras
 Sistema para determinar la urgencia de las solicitudes
 Crear tabla de vehículos disponibles con atributos (capacidad, consumo, velocidad)
-Asignación inteligente de materiales según tipo de vehículo y urgencia
+Asignación de materiales según tipo de vehículo y urgencia
 Instalación y configuración
 Requisitos previos
 XAMPP 8.2.4+
