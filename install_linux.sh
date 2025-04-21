@@ -56,7 +56,7 @@ sudo chmod -R 755 /opt/lampp/htdocs/PROYECTO
 # Paso 4: Instalar dependencias con Composer
 echo -e "${GREEN}Instalando dependencias Composer...${NC}"
 cd /opt/lampp/htdocs/PROYECTO/Tarea03_4
-composer install
+/opt/lampp/bin/php /usr/local/bin/composer install
 
 # Paso 5: Iniciar Apache y MySQL de XAMPP
 echo -e "${GREEN}Iniciando Apache y MySQL de XAMPP...${NC}"
