@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             input.parentNode.appendChild(errorDiv);
         }
         errorDiv.innerText = message;//Inserta el mensaje de error
-        input.style.backgroundColor = "#f2f278"; //Resalta el campo con un color de advertencia
+        input.style.backgroundColor = "#f2f278"; //Resalta el campo con un color de error
     }
 
     //Función para eliminar mensajes de error y restaurar el color del campo
