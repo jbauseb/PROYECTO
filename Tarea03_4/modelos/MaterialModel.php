@@ -172,6 +172,41 @@ class MaterialModel
     }
 
     /**
+     * Actualiza el stock de un material ya existente en la base de datos, en caso de nueva alta
+     * @param $id_material Identificador del material.
+     * @param $nuevo_stock del material.
+     * @param $nombre del material
+     * @param $descripcion del material
+     * @param $umbral_stock del material
+     * @return bool true si lo actualiza y false en caso de error
+     */
+    function updateMaterialStock($id_material, $nuevo_stock, $nombre, $descripcion, $umbral_stock)
+    {
+        try {
+            $stmt = $this->db->prepare("UPDATE material SET
+            nombre = ?,
+            descripcion = ?,
+            stock = ?,
+            umbral_stock = ?
+            WHERE id_material = ?");
+
+            $stmt->bindValue(1, $nombre, PDO::PARAM_STR);
+            $stmt->bindValue(2, $descripcion, PDO::PARAM_STR);
+            $stmt->bindValue(3, $nuevo_stock, PDO::PARAM_INT);
+            $stmt->bindValue(4, $umbral_stock, PDO::PARAM_INT);
+            $stmt->bindValue(5, $id_material, PDO::PARAM_INT);
+
+            //Ejecutar la consulta
+            if ($stmt->execute()) {
+                return true; //Actualización exitosa
+            }
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
      * Obtiene la cantidad de material usando su identificador y lo devuelve como un entero.
      * @param $id_material Identificador del material.
      * @return int Devuelve entero con la cantidad de ese material o nulo si hay error o no existe ese material

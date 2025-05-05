@@ -243,8 +243,8 @@ function actualizaMaterialTransportado()
  */
 function calcularDistancia($coordenadas1, $coordenadas2)
 {
-    list($lat1, $lon1) = $coordenadas1; // Punto de origen
-    list($lat2, $lon2) = $coordenadas2; // Punto de destino
+    list($lat1, $lon1) = $coordenadas1; //Punto de origen
+    list($lat2, $lon2) = $coordenadas2; //Punto de destino
 
     //URL para la solicitud a la API pública de OSRM
     $url = "http://router.project-osrm.org/route/v1/driving/{$lon1},{$lat1};{$lon2},{$lat2}?overview=false";

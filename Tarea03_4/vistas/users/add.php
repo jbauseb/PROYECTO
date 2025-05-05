@@ -32,7 +32,7 @@ endif;
                 <input type="email" id="email" name="email" class="form-control" required>
             </div>
         </div>
-        <div class=" row mb-3">
+        <div class="row mb-3">
             <div class="col-md-6">
                 <label class="form-label" title="máximo 9 dígitos">Teléfono:</label>
                 <input type="tel" id="telefono" name="telefono" class="form-control">
