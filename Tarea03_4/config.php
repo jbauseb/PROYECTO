@@ -12,7 +12,7 @@ define("BASE_PATH", __DIR__ . "/");
 // BASE_URL: Directorio base para despliegue local
 define("BASE_URL", "http://localhost/PROYECTO/Tarea03_4/");
 // BASE_URL: Directorio base para despliegue en Infinityfree
-//define("BASE_URL", "http://bautistasebastiao.ct.ws/PROYECTO/Tarea03_4/");
+//define("BASE_URL", "https://bautistasebastiao.ct.ws/PROYECTO/Tarea03_4/");
 
 /*Para conexión a BaseDatos en host local*/
 define('DBUSER', 'administrador');
